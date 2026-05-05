@@ -120,6 +120,10 @@ while not msg_queue.empty():
 st_autorefresh(interval=3000, key="refresh")
 
 st.title("TTN GPS & Voice Monitor")
+if not st.session_state.mqtt_connected:
+    if st.button("Verbindung neu starten"):
+        st.cache_resource.clear()
+        st.rerun()
 
 if st.session_state.mqtt_connected:
     st.success("MQTT: Verbunden")
