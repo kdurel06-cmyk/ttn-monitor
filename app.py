@@ -8,7 +8,7 @@ from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
 
 MQTT_HOST = "eu1.cloud.thethings.network"
-MQTT_PORT = 1883
+MQTT_PORT = 8883
 APP_ID = "masterarbeitsprojekt"
 DEVICE_ID = "gps-voice-edgeai-node-01"
 API_KEY = st.secrets["API_KEY"]
@@ -45,6 +45,8 @@ def get_mqtt():
     client.on_disconnect = on_disconnect
     client.on_message = on_message
     try:
+        import ssl
+        client.tls_set(tls_version=ssl.PROTOCOL_TLS)
         client.connect(MQTT_HOST, MQTT_PORT, keepalive=60)
         client.loop_start()
     except Exception as e:
